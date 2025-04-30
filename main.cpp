@@ -5,7 +5,7 @@ using namespace std;
 
 
 double f(double x) {
-    return x*x;
+    return x*x + x*x*x + 2*x + sin(x) - log(x);
 }
 
 // Metoda prostokątów
@@ -40,34 +40,35 @@ double simpson_method(double a, double b, int n) {
     double h = (b - a) / n;
     double sum = f(a) + f(b);
 
-    /*for (int i = 1; i < n; i++) {*/
+    for (int i = 1; i < n; i += 2)
+    {
+        double x = a + i * h;
+        sum += 4 * f(x);
+    }
 
-        for (int i = 1; i < n; i+=2)
-        {
-            double x1 = a + i * h;
-            for (int y = 2; y < n; y+=2) {
-                double x2 = a + i * h;
-                sum += 4 * x1 + 2 * x2;
-        }
-        }
+    for (int i = 2; i < n; i += 2)
+    {
+        double x = a + i * h;
+        sum += 2 * f(x);
+    }
 
     return sum * (h / 3);
 }
 
 int main() {
-    double a = 0;
-    double b = 0;
-    int n = 0;
+    double a = 1;
+    double b = 9;
+    int n = 4000;
 
 
 
     double result = rectangle_method(a, b, n);
     double result2 = trapeziod_method(a, b, n);
-    //double result3 = trapeziod_method(a, b, n);
+    double result3 = simpson_method(a, b, n);
 
     cout << "Przyblizona wartosc calki dla metody prostokatow: " << result << endl;
     cout << "Przyblizona wartosc calki dla metody trapezow: " << result2 << endl;
-    //cout << "Przyblizona wartosc calki dla metody Simpsona: " << result3 << endl;
+    cout << "Przyblizona wartosc calki dla metody Simpsona: " << result3 << endl;
     return 0;
 }
 
