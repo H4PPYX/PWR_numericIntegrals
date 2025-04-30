@@ -1,3 +1,0 @@
-C:/Users/Bartek/CLionProjects/całkowanie_metoda_prostokątów/cmake-build-debug/CMakeFiles/cakowanie_metoda_prostoktow.dir
-C:/Users/Bartek/CLionProjects/całkowanie_metoda_prostokątów/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Bartek/CLionProjects/całkowanie_metoda_prostokątów/cmake-build-debug/CMakeFiles/rebuild_cache.dir
