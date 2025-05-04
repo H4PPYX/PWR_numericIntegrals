@@ -5,7 +5,7 @@ using namespace std;
 
 
 double f(double x) {
-    return x*x + x*x*x + 2*x + sin(x) - log(x);
+    return /*x*x + x*x*x + 2*x +*/ (cos(x));
 }
 
 // Metoda prostokątów
@@ -22,7 +22,7 @@ double rectangle_method(double a, double b, int n) {
 // Metoda trapezów
 double trapeziod_method(double a, double b, int n) {
     double h = (b - a) / n;
-    double sum = f(a) * f(b) / 2;
+    double sum = (f(a) + f(b)) / 2.0;
 
     for (int i = 0; i < n; i++) {
         double x_i = a + i * h;
@@ -52,27 +52,37 @@ double simpson_method(double a, double b, int n) {
         sum += 2 * f(x);
     }
 
-    return sum * (h / 3);
+    return sum * (h / 3) ;
+}
+
+// Kwadratura Gaussa-Czebyszewa
+double gauss_chebyshev(int n) {
+    double sum = 0.0;
+
+    for (int i = 1; i <= n; i++) {
+        double x_i = cos(M_PI * (2.0 * i - 1) / (2.0 * n));
+        sum += f(x_i) * sqrt(1 - x_i * x_i);
+    }
+
+    return M_PI / n * sum;
 }
 
 int main() {
-    double a = 1;
-    double b = 9;
-    int n = 4000;
+    double a = -1;
+    double b = 1;
+    int n = 200;
 
 
 
     double result = rectangle_method(a, b, n);
     double result2 = trapeziod_method(a, b, n);
     double result3 = simpson_method(a, b, n);
+    double result4 = gauss_chebyshev(n);
 
     cout << "Przyblizona wartosc calki dla metody prostokatow: " << result << endl;
     cout << "Przyblizona wartosc calki dla metody trapezow: " << result2 << endl;
     cout << "Przyblizona wartosc calki dla metody Simpsona: " << result3 << endl;
+    cout << "Przyblizona wartosc calki dla kwadratury Gaussa-Czebyszewa: " << result4 << endl;
     return 0;
 }
 
-// TIP See CLion help at <a
-// href="https://www.jetbrains.com/help/clion/">jetbrains.com/help/clion/</a>.
-//  Also, you can try interactive lessons for CLion by selecting
-//  'Help | Learn IDE Features' from the main menu.
