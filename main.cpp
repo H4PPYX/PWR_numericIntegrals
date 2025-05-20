@@ -73,36 +73,40 @@ double gauss_chebyshev(int n) {
 int main() {
     double a = -1;
     double b = 1;
-    int n = 2;
+    for(int n = 2; n <= 200000000; n*=10) {
+
+        cout<<"Liczba przedzialow: "<< n <<endl;
+
+        auto start1 = high_resolution_clock::now();
+        double r = rectangle_method(a, b, n);
+        auto stop1 = high_resolution_clock::now();
+        auto d1 = duration_cast<nanoseconds>(stop1 - start1);
+        cout << "Przyblizona wartosc calki dla metody prostokatow: " << r << ", czas = " << d1.count() << " ns\n";
 
 
-    auto start1 = high_resolution_clock::now();
-    double r = rectangle_method(a, b, n);
-    auto stop1 = high_resolution_clock::now();
-    auto d1 = duration_cast<nanoseconds>(stop1 - start1);
-    cout << "Przyblizona wartosc calki dla metody prostokatow: " << r << ", czas = " << d1.count() << " ns\n";
+        auto start2 = high_resolution_clock::now();
+        double t = trapezoid_method(a, b, n);
+        auto stop2 = high_resolution_clock::now();
+        auto d2 = duration_cast<nanoseconds>(stop2 - start2);
+        cout << "Przyblizona wartosc calki dla metody trapezow: = " << t << ", czas = " << d2.count() << " ns\n";
 
 
-    auto start2 = high_resolution_clock::now();
-    double t = trapezoid_method(a, b, n);
-    auto stop2 = high_resolution_clock::now();
-    auto d2 = duration_cast<nanoseconds>(stop2 - start2);
-    cout << "Przyblizona wartosc calki dla metody trapezow: = " << t << ", czas = " << d2.count() << " ns\n";
+        auto start3 = high_resolution_clock::now();
+        double s = simpson_method(a, b, n);
+        auto stop3 = high_resolution_clock::now();
+        auto d3 = duration_cast<nanoseconds>(stop3 - start3);
+        cout << "Przyblizona wartosc calki dla metody Simpsona: " << s << ", czas = " << d3.count() << " ns\n";
 
-
-    auto start3 = high_resolution_clock::now();
-    double s = simpson_method(a, b, n);
-    auto stop3 = high_resolution_clock::now();
-    auto d3 = duration_cast<nanoseconds>(stop3 - start3);
-    cout << "Przyblizona wartosc calki dla metody Simpsona: " << s << ", czas = " << d3.count() << " ns\n";
-
-
-    auto start4 = high_resolution_clock::now();
-    double g = gauss_chebyshev(n);
-    auto stop4 = high_resolution_clock::now();
-    auto d4 = duration_cast<nanoseconds>(stop4 - start4);
-    cout << "Przyblizona wartosc calki dla kwadratury Gaussa-Czebyszewa: = " << g << ", czas = " << d4.count() << " ns\n";
-
+        if(a==-1 && b==1) {
+            auto start4 = high_resolution_clock::now();
+            double g = gauss_chebyshev(n);
+            auto stop4 = high_resolution_clock::now();
+            auto d4 = duration_cast<nanoseconds>(stop4 - start4);
+            cout << "Przyblizona wartosc calki dla kwadratury Gaussa-Czebyszewa: = " << g << ", czas = " << d4.count()
+                 << " ns\n";
+        }
+        cout<<endl;
+    }
     return 0;
 }
 
